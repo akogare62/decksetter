@@ -31,21 +31,29 @@ module.exports = function CardSetter(mod) {
     });
 
     command.add('decksetter', (arg0, arg1, arg2) => { 
+        mod.hook('S_CARD_DATA', 1, (event) => {
+            gameCardData = event.presets;
+        });
         if (arg0 && arg0.length > 0){
             arg0 = arg0.toLowerCase()
             if (reg.test(arg0)){
                 mod.send('C_CHANGE_CARD_PRESET', 1 , {preset: arg0-1});
                 preset1 = arg0-1;
             }
-            else{                
-                checkPresetByRace(arg0, raceData);
+            else{           
+                if(arg0 == "remove"){
+                    removePlayerSaveDataWithCurrentZone()                    
+                } 
+                else{
+                    checkPresetByRace(arg0, raceData);
+                }                
             }                
         }
         if (arg1 && arg1.length > 0){    
             arg1 = arg1.toLowerCase()
             if (reg.test(arg1)){
                 unsetEffect();
-                mod.send('C_CHANGE_CARD_EFFECT_CHECK', 1 , {id: arg1});
+                mod.send('C_CHANGE_CARD_EFFECT_CHECK', 1 , {id: arg1+0});
                 effect1 = arg1;
             }
             else{                
@@ -56,7 +64,7 @@ module.exports = function CardSetter(mod) {
         if (arg2 && arg2.length > 0){
             arg2 = arg2.toLowerCase()
             if (reg.test(arg2)){
-                mod.send('C_CHANGE_CARD_EFFECT_CHECK', 1 , {id: arg2});
+                mod.send('C_CHANGE_CARD_EFFECT_CHECK', 1 , {id: arg2+0});
                 effect2 = arg2;
             }
             else{                
@@ -69,7 +77,7 @@ module.exports = function CardSetter(mod) {
         if (!arg0 && !arg1 && !arg2) {            
             effectData.forEach(effect => {
                 command.message(effect.name);
-                command.message(effect.id + "  " + effect.acronyme);
+                command.message("id: " + effect.id + " - acronyme: " + effect.acronyme);
             });    
             command.message("use !decksetter preset1 (id or racetype) effect1(acronyme or id) effect_2(acronyme or id)");     
         }
@@ -136,7 +144,25 @@ module.exports = function CardSetter(mod) {
                 effect2: effect2
             });
         }
+        else{
+            command.message("zone already saved plz use !decksetter remove then");
+            command.message("use !decksetter preset1 (id or racetype) effect1(acronyme or id) effect_2(acronyme or id)");
+        }        
         writeFile();
+    }
+
+    function removePlayerSaveDataWithCurrentZone(){
+        zoneData = playerSaveData.find(z => z.zone == game.me.zone);
+        if (zoneData){
+            let counter = 0;
+            playerSaveData.forEach(save => {
+                if (zoneData.zone == save.zone){
+                    playerSaveData.splice(counter, 1);
+                }
+                counter++;
+            })
+            writeFile();
+        }
     }
 
     function readFile(arg) {
@@ -151,7 +177,7 @@ module.exports = function CardSetter(mod) {
     }
 
     function readFile2(){
-        if (!fs.existsSync(filepath())) return;
+        if (!fs.existsSync(filepath2())) return;
         fs.readFile(filepath2(), (err, data) => {
             if (err) 
                 mod.log(err);
