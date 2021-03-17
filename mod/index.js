@@ -17,6 +17,7 @@ module.exports = function CardSetter(mod) {
   let gameCardData, raceData, effectData, zoneData
   let effect1, effect2, preset1, intParsed
   let playerSaveData = []
+  let truc = mod.game.me.zone
   const reg = new RegExp("^[0-9]+$")
 
   game.on("enter_game", () => {
@@ -38,11 +39,18 @@ module.exports = function CardSetter(mod) {
       mod.send("C_CHANGE_CARD_EFFECT_CHECK", 1, { id: zoneData.effect2 })
     }
   })
+  var aZone = 0
+  mod.hook("S_LOAD_TOPO", 3, (e) => {
+    aZone = e.zone
+  })
 
-  command.add("decksetter", (arg0, arg1, arg2) => {
+  command.add(["decksetter", "ds"], (arg0, arg1, arg2) => {
     if (!arg0) {
       settings.enabled = !settings.enabled
       command.message(settings.enabled ? "enabled" : "disabled")
+    }
+    if (!settings.enabled && arg0) {
+      command.message("use !decksetter or !ds to enable the mod")
     }
     mod.hook("S_CARD_DATA", 1, (event) => {
       gameCardData = event.presets
@@ -55,8 +63,16 @@ module.exports = function CardSetter(mod) {
         case "list":
           effectData.forEach((effect) => {
             command.message(effect.name)
-            command.message("id: " + effect.id + " - acronyme: " + effect.acronyme)
+            command.message(`id: ${effect.id} - acronyme: ${effect.acronyme}`)
           })
+          break
+        case "help":
+          command.message("use !decksetter or !ds list to list card effect id and acronyme")
+          command.message("use !decksetter or !ds remove to delete zone save setings")
+          command.message("use !decksetter or !ds preset1 (id or racetype) effect1(acronyme or id) effect_2(acronyme or id)")
+          break
+        case "loc":
+          command.message(`Current Loc: ${aZone} / ${dungeon[aZone]["en"]}`)
           break
         default:
           arg0 = arg0.toLowerCase()
@@ -73,12 +89,6 @@ module.exports = function CardSetter(mod) {
       effectSetter(arg1, true)
       effectSetter(arg2, false)
       updatePlayerSaveDataWithCurrentZone()
-    }
-    if (!settings.enabled && !arg0 && !arg1 && !arg2) {
-      command.message("use !decksetter to enable the mod")
-      command.message("use !decksetter list to list card effect id and acronyme")
-      command.message("use !decksetter remove to delete zone save setings")
-      command.message("use !decksetter preset1 (id or racetype) effect1(acronyme or id) effect_2(acronyme or id)")
     }
   })
 
@@ -202,5 +212,9 @@ module.exports = function CardSetter(mod) {
     fs.writeFile(saveFilePath(), JSON.stringify(playerSaveData, null, 2), (err) => {
       if (err) mod.log(err)
     })
+  }
+
+  this.destructor = () => {
+    command.remove("decksetter")
   }
 }
