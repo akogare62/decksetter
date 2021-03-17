@@ -31,7 +31,7 @@ module.exports = function CardSetter(mod) {
       zoneData = playerSaveData.find((p) => p.zone === zone)
     }
     if (zoneData) {
-      command.message(`Entering in: ${zoneData.name} Preset: ${zoneData.preset} Effect: ${zoneData.effect1} / ${zoneData.effect2}`)
+      command.message(`Entering in: ${zoneData.name} Preset: ${zoneData.preset+1} Effect: ${zoneData.effect1} / ${zoneData.effect2}`)
       mod.send("C_CHANGE_CARD_PRESET", 1, { preset: zoneData.preset })
       unsetEffect()
       mod.send("C_CHANGE_CARD_EFFECT_CHECK", 1, { id: zoneData.effect1 })
