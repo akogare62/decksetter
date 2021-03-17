@@ -17,7 +17,6 @@ module.exports = function CardSetter(mod) {
   let gameCardData, raceData, effectData, zoneData
   let effect1, effect2, preset1, intParsed
   let playerSaveData = []
-  let truc = mod.game.me.zone
   const reg = new RegExp("^[0-9]+$")
 
   game.on("enter_game", () => {
@@ -215,6 +214,6 @@ module.exports = function CardSetter(mod) {
   }
 
   this.destructor = () => {
-    command.remove("decksetter")
+    command.remove(["decksetter", "ds"])
   }
 }
