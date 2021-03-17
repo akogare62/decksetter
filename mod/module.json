@@ -1,0 +1,12 @@
+{
+  "name": "CardSetter",
+  "options": {
+    "niceName": "CardSetter",
+    "guiName": "CardSetter",
+    "settingsVersion": 103.2,
+    "settingsFile": "config.json",
+    "settingsMigrator": "settings.js"
+  },
+  "author": "akogare62",
+  "version": "103.2"
+}

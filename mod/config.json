@@ -1,0 +1,14 @@
+{
+    "version": 103.2,
+    "data": {
+        "enabled": true,
+        "default": [
+            {
+                "zone": 0,
+                "name": null,
+                "effect1": "9",
+                "effect2": "33"
+            }
+        ]
+    }
+}
