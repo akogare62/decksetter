@@ -14,16 +14,16 @@ module.exports = function CardSetter(mod) {
     return `${__dirname}\\saves\\${game.me.name}-${game.me.serverId}.json`
   }
 
-  let gameCardData, raceData, effectData, zoneData
-  let effect1, effect2, preset1, intParsed
-  let playerSaveData = []
+  let gameCardData, raceData, effectData, zoneData, effect1, effect2, preset1, intParsed, zoneNameTmp;
+  let playerSaveData = [];
+  let aZone = 0;
   const reg = new RegExp("^[0-9]+$")
 
   game.on("enter_game", () => {
-    playerSaveData = []
-    readFile("race")
-    readFile("effect")
-    readSavedFile()
+    playerSaveData = [];
+    readFile("race");    
+    readFile("effect");
+    readSavedFile();
   })
 
   game.me.on("change_zone", (zone, quick) => {
@@ -37,11 +37,7 @@ module.exports = function CardSetter(mod) {
       mod.send("C_CHANGE_CARD_EFFECT_CHECK", 1, { id: zoneData.effect1 })
       mod.send("C_CHANGE_CARD_EFFECT_CHECK", 1, { id: zoneData.effect2 })
     }
-  })
-  var aZone = 0
-  mod.hook("S_LOAD_TOPO", 3, (e) => {
-    aZone = e.zone
-  })
+  }) 
 
   command.add(["decksetter", "ds"], (arg0, arg1, arg2) => {
     if (!arg0) {
@@ -54,6 +50,10 @@ module.exports = function CardSetter(mod) {
     mod.hook("S_CARD_DATA", 1, (event) => {
       gameCardData = event.presets
     })
+    mod.hook("S_LOAD_TOPO", 3, (e) => {
+      aZone = e.zone
+    })
+
     if (arg0 && settings.enabled) {
       switch (arg0) {
         case "remove":
@@ -71,7 +71,8 @@ module.exports = function CardSetter(mod) {
           command.message("use !decksetter or !ds preset1 (id or racetype) effect1(acronyme or id) effect_2(acronyme or id)")
           break
         case "loc":
-          command.message(`Current Loc: ${aZone} / ${dungeon[aZone]["en"]}`)
+          try { zoneNameTmp = dungeon[aZone]["en"] } catch { zoneNameTmp = "notdefined" }
+          command.message(`Current Loc: ${aZone} /s ${zoneNameTmp}`)
           break
         default:
           arg0 = arg0.toLowerCase()
@@ -93,6 +94,10 @@ module.exports = function CardSetter(mod) {
 
   mod.hook("S_CARD_DATA", 1, (event) => {
     gameCardData = event.presets
+  })
+
+  mod.hook("S_LOAD_TOPO", 3, (e) => {
+    aZone = e.zone
   })
 
   function checkPresetByRace(race, raceData) {
@@ -154,9 +159,10 @@ module.exports = function CardSetter(mod) {
   function updatePlayerSaveDataWithCurrentZone() {
     zoneData = playerSaveData.find((z) => z.zone == game.me.zone)
     if (!zoneData) {
+      try { zoneNameTmp = dungeon[aZone]["en"] } catch { zoneNameTmp = "notdefined" }
       playerSaveData.push({
         zone: game.me.zone,
-        name: dungeon[game.me.zone]["en"],
+        name: zoneNameTmp,
         preset: preset1,
         effect1: effect1,
         effect2: effect2,
