@@ -14,7 +14,7 @@ module.exports = function CardSetter(mod) {
     return `${__dirname}\\saves\\${game.me.name}-${game.me.serverId}.json`
   }
 
-  let gameCardData, raceData, effectData, zoneData, effect1, effect2, preset1, intParsed, zoneNameTmp;
+  let gameCardData, raceData, effectData, zoneData, effect1, effect2, preset1, intParsed, zoneNameTmp, presetNameTmp, effectOneNameTmp, effectTwoNameTmp;
   let playerSaveData = [];
   let aZone = 0;
   const reg = new RegExp("^[0-9]+$")
@@ -31,7 +31,7 @@ module.exports = function CardSetter(mod) {
       zoneData = playerSaveData.find((p) => p.zone === zone)
     }
     if (zoneData) {
-      command.message(`Entering in: ${zoneData.name} Preset: ${zoneData.preset+1} Effect: ${zoneData.effect1} / ${zoneData.effect2}`)
+      translateZoneDataToMessage(zoneData);
       mod.send("C_CHANGE_CARD_PRESET", 1, { preset: zoneData.preset })
       unsetEffect()
       mod.send("C_CHANGE_CARD_EFFECT_CHECK", 1, { id: zoneData.effect1 })
@@ -217,6 +217,14 @@ module.exports = function CardSetter(mod) {
     fs.writeFile(saveFilePath(), JSON.stringify(playerSaveData, null, 2), (err) => {
       if (err) mod.log(err)
     })
+  }
+
+  function translateZoneDataToMessage(zoneData){
+      presetNameTmp = zoneData.preset + 1;
+      effectOneNameTmp = effectData.find((p) => p.id == zoneData.effect1)
+      effectTwoNameTmp = effectData.find((p) => p.id == zoneData.effect2)
+      command.message(`Entering in ${zoneData.name} / ${zoneData.zone} your preset page number is ${presetNameTmp} `);
+      command.message(`with collection Effect ${effectOneNameTmp.name} and ${effectTwoNameTmp.name}`);
   }
 
   this.destructor = () => {
