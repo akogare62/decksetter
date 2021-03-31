@@ -1,11 +1,11 @@
 {
     "disableAutoUpdate": false,
-    "name": "CardSetter",
+    "name": "DeckSetter",
     "author": "akogare62",
     "version": "103.2",
     "options": {
-        "niceName": "CardSetter",
-        "guiName": "CardSetter",
+        "niceName": "DeckSetter",
+        "guiName": "DeckSetter",
         "settingsVersion": 103.2,
         "settingsFile": "config.json",
         "settingsMigrator": "settings.js"
