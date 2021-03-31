@@ -3,6 +3,8 @@
 "use strict"
 
 module.exports = function CardSetter(mod) {
+  const NotCP = typeof mod.compileProto !== "undefined"
+  const defs = { cChangeCardEffectCheck: 1, cChangeCardEffectUncheck: 1, cChangeCardPreset: 1, sChangeCardPreset: 1, sChangeCardEffectCheck: 1, sChangeCardEffectUncheck: 1 }
   const { command, game, settings } = mod
   const fs = require("fs"),
     path = require("path"),
@@ -14,16 +16,25 @@ module.exports = function CardSetter(mod) {
     return `${__dirname}\\saves\\${game.me.name}-${game.me.serverId}.json`
   }
 
-  let gameCardData, raceData, effectData, zoneData, effect1, effect2, preset1, intParsed, zoneNameTmp, presetNameTmp, effectOneNameTmp, effectTwoNameTmp;
-  let playerSaveData = [];
-  let aZone = 0;
+  if (NotCP) {
+    defs.cChangeCardEffectCheck = mod.compileProto("uint32 id")
+    defs.cChangeCardEffectUncheck = mod.compileProto("uint32 id")
+    defs.cChangeCardPreset = mod.compileProto("uint32 preset")
+    defs.sChangeCardPreset = mod.compileProto("uint32 preset")
+    defs.sChangeCardEffectCheck = mod.compileProto("uint32 id")
+    defs.sChangeCardEffectUncheck = mod.compileProto("uint32 id")
+  }
+
+  let gameCardData, raceData, effectData, zoneData, effect1, effect2, preset1, intParsed, zoneNameTmp, presetNameTmp, effectOneNameTmp, effectTwoNameTmp
+  let playerSaveData = []
+  let aZone = 0
   const reg = new RegExp("^[0-9]+$")
 
   game.on("enter_game", () => {
-    playerSaveData = [];
-    readFile("race");    
-    readFile("effect");
-    readSavedFile();
+    playerSaveData = []
+    readFile("race")
+    readFile("effect")
+    readSavedFile()
   })
 
   game.me.on("change_zone", (zone, quick) => {
@@ -31,13 +42,13 @@ module.exports = function CardSetter(mod) {
       zoneData = playerSaveData.find((p) => p.zone === zone)
     }
     if (zoneData) {
-      translateZoneDataToMessage(zoneData);
-      mod.send("C_CHANGE_CARD_PRESET", 1, { preset: zoneData.preset })
+      translateZoneDataToMessage(zoneData)
+      mod.send("C_CHANGE_CARD_PRESET", 1, defs.cChangeCardPreset, { preset: zoneData.preset })
       unsetEffect()
-      mod.send("C_CHANGE_CARD_EFFECT_CHECK", 1, { id: zoneData.effect1 })
-      mod.send("C_CHANGE_CARD_EFFECT_CHECK", 1, { id: zoneData.effect2 })
+      mod.send("C_CHANGE_CARD_EFFECT_CHECK", 1, defs.cChangeCardEffectCheck, { id: zoneData.effect1 })
+      mod.send("C_CHANGE_CARD_EFFECT_CHECK", 1, defs.cChangeCardEffectCheck, { id: zoneData.effect2 })
     }
-  }) 
+  })
 
   command.add(["decksetter", "ds"], (arg0, arg1, arg2) => {
     if (!arg0) {
@@ -71,13 +82,17 @@ module.exports = function CardSetter(mod) {
           command.message("use !decksetter or !ds preset1 (id or racetype) effect1(acronyme or id) effect_2(acronyme or id)")
           break
         case "loc":
-          try { zoneNameTmp = dungeon[aZone]["en"] } catch { zoneNameTmp = "notdefined" }
+          try {
+            zoneNameTmp = dungeon[aZone]["en"]
+          } catch {
+            zoneNameTmp = "notdefined"
+          }
           command.message(`Current Loc: ${aZone} /s ${zoneNameTmp}`)
           break
         default:
           arg0 = arg0.toLowerCase()
           if (reg.test(arg0)) {
-            mod.send("C_CHANGE_CARD_PRESET", 1, { preset: arg0 - 1 })
+            mod.send("C_CHANGE_CARD_PRESET", 1, defs.cChangeCardPreset, { preset: arg0 - 1 })
             preset1 = arg0 - 1
           } else {
             checkPresetByRace(arg0, raceData)
@@ -108,7 +123,7 @@ module.exports = function CardSetter(mod) {
         presets.presetCards.forEach((presetCard) => {
           if (raceData[race].includes(presetCard.cardId)) {
             presetRaceSelected = count
-            mod.send("C_CHANGE_CARD_PRESET", 1, { preset: count })
+            mod.send("C_CHANGE_CARD_PRESET", 1, defs.cChangeCardPreset, { preset: count })
             preset1 = count
           }
         })
@@ -125,7 +140,7 @@ module.exports = function CardSetter(mod) {
       unsetEffect()
     }
     if (reg.test(arg)) {
-      mod.send("C_CHANGE_CARD_EFFECT_CHECK", 1, { id: arg })
+      mod.send("C_CHANGE_CARD_EFFECT_CHECK", 1, defs.cChangeCardEffectCheck, { id: arg })
       if (boobool == true) {
         effect1 = intParsed
       } else effect2 = intParsed
@@ -142,14 +157,14 @@ module.exports = function CardSetter(mod) {
 
   function unsetEffect() {
     effectData.forEach((effect) => {
-      mod.send("C_CHANGE_CARD_EFFECT_UNCHECK", 1, { id: effect.id })
+      mod.send("C_CHANGE_CARD_EFFECT_UNCHECK", 1, defs.cChangeCardEffectUncheck, { id: effect.id })
     })
   }
 
   function setEffect(arg, boobool) {
     effectData.forEach((effect) => {
       if (arg == effect.acronyme) {
-        mod.send("C_CHANGE_CARD_EFFECT_CHECK", 1, { id: effect.id })
+        mod.send("C_CHANGE_CARD_EFFECT_CHECK", 1, defs.cChangeCardEffectCheck, { id: effect.id })
         if (boobool) effect1 = effect.id
         if (!boobool) effect2 = effect.id
       }
@@ -159,7 +174,11 @@ module.exports = function CardSetter(mod) {
   function updatePlayerSaveDataWithCurrentZone() {
     zoneData = playerSaveData.find((z) => z.zone == game.me.zone)
     if (!zoneData) {
-      try { zoneNameTmp = dungeon[aZone]["en"] } catch { zoneNameTmp = "notdefined" }
+      try {
+        zoneNameTmp = dungeon[aZone]["en"]
+      } catch {
+        zoneNameTmp = "notdefined"
+      }
       playerSaveData.push({
         zone: game.me.zone,
         name: zoneNameTmp,
@@ -219,12 +238,12 @@ module.exports = function CardSetter(mod) {
     })
   }
 
-  function translateZoneDataToMessage(zoneData){
-      presetNameTmp = zoneData.preset + 1;
-      effectOneNameTmp = effectData.find((p) => p.id == zoneData.effect1)
-      effectTwoNameTmp = effectData.find((p) => p.id == zoneData.effect2)
-      command.message(`Entering in ${zoneData.name} / ${zoneData.zone} your preset page number is ${presetNameTmp} `);
-      command.message(`with collection Effect ${effectOneNameTmp.name} and ${effectTwoNameTmp.name}`);
+  function translateZoneDataToMessage(zoneData) {
+    presetNameTmp = zoneData.preset + 1
+    effectOneNameTmp = effectData.find((p) => p.id == zoneData.effect1)
+    effectTwoNameTmp = effectData.find((p) => p.id == zoneData.effect2)
+    command.message(`Entering in ${zoneData.name} / ${zoneData.zone} your preset page number is ${presetNameTmp} `)
+    command.message(`with collection Effect ${effectOneNameTmp.name} and ${effectTwoNameTmp.name}`)
   }
 
   this.destructor = () => {

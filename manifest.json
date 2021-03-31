@@ -1,22 +1,30 @@
 {
-  "files": {
-    "config.json": {
-      "overwrite": false,
-      "hash": "c9e1bfe07215916b69c0aa6e809092f9db1c21785503d71b50da843c18c0b0a6"
+    "files": {
+        "README.md": "91ffe320683c899b3ea4da5700c70d3b9a33fdd3e405799f466c20466882faa0",
+        "config.json": {
+            "overwrite": false,
+            "hash": "c9e1bfe07215916b69c0aa6e809092f9db1c21785503d71b50da843c18c0b0a6"
+        },
+        "data/definitions/C_CHANGE_CARD_EFFECT_CHECK.1.def": "7cdaa3e7244ec7091712c0547a5d75b07726513600e0b64db34b6b5582769260",
+        "data/definitions/C_CHANGE_CARD_EFFECT_UNCHECK.1.def": "7cdaa3e7244ec7091712c0547a5d75b07726513600e0b64db34b6b5582769260",
+        "data/definitions/C_CHANGE_CARD_PRESET.1.def": "9f6bae95fd08b14e61f5fccbd3ab9fe001f093376f00cbf7550d43c3f66c2465",
+        "data/definitions/S_CARD_DATA.1.def": "5669d607c85139dac23da1a9e398b5cc86a4aea0de0c7f549fa8c8521f75d7c5",
+        "data/definitions/S_CHANGE_CARD_EFFECT_CHECK.1.def": "7cdaa3e7244ec7091712c0547a5d75b07726513600e0b64db34b6b5582769260",
+        "data/definitions/S_CHANGE_CARD_EFFECT_UNCHECK.1.def": "7cdaa3e7244ec7091712c0547a5d75b07726513600e0b64db34b6b5582769260",
+        "data/definitions/S_CHANGE_CARD_PRESET.1.def": "78f7925009432531597b286901af7e66f3a78d51e617ca2e80583ccc04845d5f",
+        "data/dungeons.json": "2288e7cdaac2f0f95a27a6fa883222588138bb360fd56551868e3677a6bd8d75",
+        "data/effect.json": "60f837da8b9737f5a9ef7f33c5036e93af0d9f770c1cdc3e99ac054da80e944c",
+        "data/opcodes/protocol.379348.map": "725958ca0706cdf92b3d940f5f479a1af55a8ef6c79e82ce3c2f65a719e1ee66",
+        "data/race.json": "8b845ecf2792aea9e2563c29dc54288873cdcd9c838cf7bd5a9ac6f19bb0d95b",
+        "index.js": "c9debf5823cc3c7babec4e0ca42fa5ec0f0bea5bc66afa0e90b4718839fe3662",
+        "module.json": "3f545cf55b41f7e653ec0c6f03a84c422ac26e5ac40a4c3ea176263e15b58a84",
+        "settings.js": "1c6887cbb373390cb4484d022440a38146c9e29e212b2e98e80977f6d89b693e"
     },
-    "data/dungeons.json": "2288e7cdaac2f0f95a27a6fa883222588138bb360fd56551868e3677a6bd8d75",
-    "data/effect.json": "60f837da8b9737f5a9ef7f33c5036e93af0d9f770c1cdc3e99ac054da80e944c",
-    "data/opcodes/protocol.379348.map": "725958ca0706cdf92b3d940f5f479a1af55a8ef6c79e82ce3c2f65a719e1ee66",
-    "data/race.json": "8b845ecf2792aea9e2563c29dc54288873cdcd9c838cf7bd5a9ac6f19bb0d95b",
-    "index.js": "59af88747da77cfd4bb0292ec3502562e5b3e1e3c6cc1182579a30b112815951",
-    "module.json": "3f545cf55b41f7e653ec0c6f03a84c422ac26e5ac40a4c3ea176263e15b58a84",
-    "settings.js": "1c6887cbb373390cb4484d022440a38146c9e29e212b2e98e80977f6d89b693e"
-  },
-  "defs": {
-    "C_CHANGE_CARD_EFFECT_CHECK": 1,
-    "C_CHANGE_CARD_EFFECT_UNCHECK": 1,
-    "C_CHANGE_CARD_PRESET": 1,
-    "S_CARD_DATA": 1,
-    "S_LOAD_TOPO": 3
-  }
+    "defs": {
+        "C_CHANGE_CARD_EFFECT_CHECK": 1,
+        "C_CHANGE_CARD_EFFECT_UNCHECK": 1,
+        "C_CHANGE_CARD_PRESET": 1,
+        "S_CARD_DATA": 1,
+        "S_LOAD_TOPO": 3
+    }
 }
