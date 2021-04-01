@@ -43,10 +43,10 @@ module.exports = function CardSetter(mod) {
     }
     if (zoneData) {
       translateZoneDataToMessage(zoneData)
-      mod.send("C_CHANGE_CARD_PRESET", 1, defs.cChangeCardPreset, { preset: zoneData.preset })
+      mod.send("C_CHANGE_CARD_PRESET", 1, { preset: zoneData.preset })
       unsetEffect()
-      mod.send("C_CHANGE_CARD_EFFECT_CHECK", 1, defs.cChangeCardEffectCheck, { id: zoneData.effect1 })
-      mod.send("C_CHANGE_CARD_EFFECT_CHECK", 1, defs.cChangeCardEffectCheck, { id: zoneData.effect2 })
+      mod.send("C_CHANGE_CARD_EFFECT_CHECK", 1, { id: zoneData.effect1 })
+      mod.send("C_CHANGE_CARD_EFFECT_CHECK", 1, { id: zoneData.effect2 })
     }
   })
 
@@ -92,7 +92,7 @@ module.exports = function CardSetter(mod) {
         default:
           arg0 = arg0.toLowerCase()
           if (reg.test(arg0)) {
-            mod.send("C_CHANGE_CARD_PRESET", 1, defs.cChangeCardPreset, { preset: arg0 - 1 })
+            mod.send("C_CHANGE_CARD_PRESET", 1, { preset: arg0 - 1 })
             preset1 = arg0 - 1
           } else {
             checkPresetByRace(arg0, raceData)
@@ -123,7 +123,7 @@ module.exports = function CardSetter(mod) {
         presets.presetCards.forEach((presetCard) => {
           if (raceData[race].includes(presetCard.cardId)) {
             presetRaceSelected = count
-            mod.send("C_CHANGE_CARD_PRESET", 1, defs.cChangeCardPreset, { preset: count })
+            mod.send("C_CHANGE_CARD_PRESET", 1, { preset: count })
             preset1 = count
           }
         })
@@ -140,7 +140,7 @@ module.exports = function CardSetter(mod) {
       unsetEffect()
     }
     if (reg.test(arg)) {
-      mod.send("C_CHANGE_CARD_EFFECT_CHECK", 1, defs.cChangeCardEffectCheck, { id: arg })
+      mod.send("C_CHANGE_CARD_EFFECT_CHECK", 1, { id: arg })
       if (boobool == true) {
         effect1 = intParsed
       } else effect2 = intParsed
@@ -157,14 +157,14 @@ module.exports = function CardSetter(mod) {
 
   function unsetEffect() {
     effectData.forEach((effect) => {
-      mod.send("C_CHANGE_CARD_EFFECT_UNCHECK", 1, defs.cChangeCardEffectUncheck, { id: effect.id })
+      mod.send("C_CHANGE_CARD_EFFECT_UNCHECK", 1, { id: effect.id })
     })
   }
 
   function setEffect(arg, boobool) {
     effectData.forEach((effect) => {
       if (arg == effect.acronyme) {
-        mod.send("C_CHANGE_CARD_EFFECT_CHECK", 1, defs.cChangeCardEffectCheck, { id: effect.id })
+        mod.send("C_CHANGE_CARD_EFFECT_CHECK", 1, { id: effect.id })
         if (boobool) effect1 = effect.id
         if (!boobool) effect2 = effect.id
       }
