@@ -233,6 +233,17 @@ module.exports = function CardSetter(mod) {
       return a.zone - b.zone
     })
 
+    if (!fs.existsSync(`${__dirname}\\saves`)) {
+      fs.mkdir(`${__dirname}\\saves`, function(err) {
+        if (err) {
+          console.log(err)
+        } 
+        else {
+          console.log("New directory successfully created.")
+        }
+      })
+    }
+    
     fs.writeFile(saveFilePath(), JSON.stringify(playerSaveData, null, 2), (err) => {
       if (err) mod.log(err)
     })

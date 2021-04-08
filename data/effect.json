@@ -98,103 +98,115 @@
     {
         "acronyme": "ch30mpamp",
         "name": "At Last United",
-        "description": "When Critical Hit (30%), increase physical and magical amplification by 3000 for 5s (180s CD)",
+        "description": "When Critical Hit (30%), increase physical and magical amplification by 3000 for 30s (180s CD)",
         "id": 17
     },
     {
         "acronyme": "ch30mpres",
         "name": "War and Piece",
-        "description": "When Critical Hit (30%), increase physical and magical resistance by 3000 for 5s (180s CD)",
+        "description": "When Critical Hit (30%), increase physical and magical resistance by 3000 for 30s (180s CD)",
         "id": 18
     },
     {
         "acronyme": "ch30mpresdrag",
         "name": "Power Hungry",
-        "description": "When Critical Hit (30%), increase physical and magical resistance by 1500 for 5s (180s CD)",
+        "description": "When Critical Hit (30%), increase physical and magical resistance by 1500 for 30s (180s CD)",
         "id": 19
     },
     {
         "acronyme": "ch30mpampdrag",
         "name": "A Danger to All",
-        "description": "When Critical Hit (30%), increase physical and magical amplification by 1500 for 5s (180s CD)",
+        "description": "When Critical Hit (30%), increase physical and magical amplification by 1500 for 30s (180s CD)",
         "id": 20
     },
     {
         "acronyme": "ch30mpcritpow",
         "name": "Kill to Start",
-        "description": "When Critical Hit (30%), increase physical and magical crit power by 0.02 for 5s (180s CD)",
+        "description": "When Critical Hit (30%), increase physical and magical crit power by 0.02 for 30s (180s CD)",
         "id": 21
     },
     {
         "acronyme": "cat",
         "name": "Piscivore",
-        "description": "When Critical Hit (30%), increase physical and magical crit power by 0.01 for 5s (60s CD)",
+        "description": "When Critical Hit (30%), increase physical and magical crit power by 0.01 for 30s (60s CD)",
         "id": 22
     },
     {
         "acronyme": "giant",
         "name": "Immense",
-        "description": "When Critical Hit (30%), increase physical and magical crit power by 0.02 for 5s (180s CD)",
+        "description": "When Critical Hit (30%), increase physical and magical crit power by 0.02 for 30s (180s CD)",
         "id": 23
     },
     {
         "acronyme": "argon",
         "name": "Akalath Raid Group",
-        "description": "When Critical Hit (30%), increase physical and magical crit power by 0.02 for 5s (180s CD)",
+        "description": "When Critical Hit (30%), increase physical and magical crit power by 0.02 for 30s (180s CD)",
         "id": 24
     },
     {
         "acronyme": "dragon",
         "name": "Nyah, Nyah!",
-        "description": "When Critical Hit (30%), increase physical and magical crit power by 0.02 for 5s (180s CD)",
+        "description": "When Critical Hit (30%), increase physical and magical crit power by 0.02 for 30s (180s CD)",
         "id": 25
     },
     {
         "acronyme": "god",
         "name": "In God's Name",
-        "description": "When Critical Hit (30%), increase physical and magical crit power by 0.02 for 5s (180s CD)",
+        "description": "When Critical Hit (30%), increase physical and magical crit power by 0.02 for 30s (180s CD)",
         "id": 26
     },
     {
         "acronyme": "faerie",
         "name": "A Fairy ?",
-        "description": "When Critical Hit (30%), increase physical and magical crit power by 0.02 for 5s (180s CD)",
+        "description": "When Critical Hit (30%), increase physical and magical crit power by 0.02 for 30s (180s CD)",
         "id": 27
     },
     {
         "acronyme": "azart",
         "name": "Azart Special Forces Officer",
-        "description": "When Critical Hit (30%), increase physical and magical crit power by 0.02 for 5s (180s CD)",
+        "description": "When Critical Hit (30%), increase physical and magical crit power by 0.02 for 30s (180s CD)",
         "id": 28
     },
     {
         "acronyme": "magicalC",
         "name": "Pick 'n' Mix",
-        "description": "When Critical Hit (30%), increase physical and magical crit power by 0.02 for 5s (180s CD)",
+        "description": "When Critical Hit (30%), increase physical and magical crit power by 0.02 for 30s (180s CD)",
         "id": 29
     },
     {
         "acronyme": "beast",
         "name": "Wildlife Protection Squad",
-        "description": "When Critical Hit (30%), increase physical and magical crit power by 0.02 for 5s (180s CD)",
+        "description": "When Critical Hit (30%), increase physical and magical crit power by 0.02 for 30s (180s CD)",
         "id": 30
     },
     {
         "acronyme": "magicalD",
         "name": "Study of Magic",
-        "description": "When Critical Hit (30%), increase physical and magical crit power by 0.02 for 5s (180s CD)",
+        "description": "When Critical Hit (30%), increase physical and magical crit power by 0.02 for 30s (180s CD)",
         "id": 31
     },
     {
         "acronyme": "demon",
         "name": "Diabolical",
-        "description": "When Critical Hit (30%), increase physical and magical crit power by 0.02 for 5s (180s CD)",
+        "description": "When Critical Hit (30%), increase physical and magical crit power by 0.02 for 30s (180s CD)",
         "id": 32
     },
     {
         "acronyme": "ancestor",
         "name": "The Living",
-        "description": "When Critical Hit (30%), increase physical and magical crit power by 0.02 for 5s (180s CD)",
+        "description": "When Critical Hit (30%), increase physical and magical crit power by 0.02 for 30s (180s CD)",
         "id": 33
+    },
+    {
+        "acronyme": "flower",
+        "name": "The Floristry Commission",
+        "description": "When Critical Hit (30%), increase physical and magical amplification by 3500 for 30s (180s CD)",
+        "id": 34
+    },
+    {
+        "acronyme": "giant2",
+        "name": "Lie Like a Rug",
+        "description": "Manglemore's game after battle for 60s (1800s CD)",
+        "id": 35
     }
 ]
